@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
@@ -41,6 +44,11 @@ android {
 }
 
 dependencies {
+
+    // Dagger Hilt
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     // Supabase
     implementation("io.github.jan-tennert.supabase:realtime-kt:2.2.0")

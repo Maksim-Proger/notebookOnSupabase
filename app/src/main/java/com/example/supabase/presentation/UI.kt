@@ -5,16 +5,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.supabase.data.Note
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.supabase.domain.model.Note
 
 @Composable
-fun NoteScreen(viewModel: NoteViewModel = viewModel()) {
-    val notes by viewModel.notes.collectAsState() // Преобразуем StateFlow в состояние Compose
+fun NoteScreen(viewModel: NoteViewModel = hiltViewModel()) {
+    val notes by viewModel.notes.collectAsState()
 
     var title by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
@@ -50,11 +50,12 @@ fun NoteScreen(viewModel: NoteViewModel = viewModel()) {
         }
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Список заметок
         LazyColumn {
             items(notes) { note ->
                 NoteItem(
                     note = note,
-                    onDelete = { viewModel.deleteNote(note.id) } // note.id имеет тип Long?
+                    onDelete = { viewModel.deleteNote(note.id) }
                 )
             }
         }
